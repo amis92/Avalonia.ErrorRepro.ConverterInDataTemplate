@@ -1,0 +1,13 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:Avalonia.ErrorRepro.ConverterInDataTemplate.ViewModels;assembly=Avalonia.ErrorRepro.ConverterInDataTemplate"
+        Icon="resm:Avalonia.ErrorRepro.ConverterInDataTemplate.Assets.avalonia-logo.ico"
+        Title="Avalonia.ErrorRepro.ConverterInDataTemplate">
+
+  <Design.DataContext>
+    <vm:MainWindowViewModel/>
+  </Design.DataContext>
+  
+  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+  
+</Window>
