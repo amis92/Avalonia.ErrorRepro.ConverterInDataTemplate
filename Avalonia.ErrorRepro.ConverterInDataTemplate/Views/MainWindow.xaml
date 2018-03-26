@@ -1,5 +1,7 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assemgly=mscorlib"
+        xmlns:c="clr-namespace:Avalonia.ErrorRepro.ConverterInDataTemplate.Converters;assembly=Avalonia.ErrorRepro.ConverterInDataTemplate"
         xmlns:vm="clr-namespace:Avalonia.ErrorRepro.ConverterInDataTemplate.ViewModels;assembly=Avalonia.ErrorRepro.ConverterInDataTemplate"
         Icon="resm:Avalonia.ErrorRepro.ConverterInDataTemplate.Assets.avalonia-logo.ico"
         Title="Avalonia.ErrorRepro.ConverterInDataTemplate">
@@ -7,7 +9,35 @@
   <Design.DataContext>
     <vm:MainWindowViewModel/>
   </Design.DataContext>
+
+  <Window.Resources>
+    <c:CustomConverter x:Key="CustomConv" Suffix="It's custom"/>
+    <sys:String x:Key="ResString">FooBar Static Resource string</sys:String>
+  </Window.Resources>
   
-  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+  <Window.DataTemplates>
+    <DataTemplate DataType="{x:Type vm:Custom1ViewModel}">
+      <TextBox Text="{StaticResource ResString}" />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:Custom2ViewModel}">
+      <TextBox Text="{Binding Name, Converter={StaticResource CustomConv}, Mode=OneWay}" />
+    </DataTemplate>
+  </Window.DataTemplates>
+
+  <StackPanel>
+
+    <TextBlock>Control binding, no converter:</TextBlock>
+    <TextBox Text="{Binding Custom1, Mode=OneWay}"/>
+
+    <TextBlock>Control binding, with converter:</TextBlock>
+    <TextBox Text="{Binding Custom2, Converter={StaticResource CustomConv}, Mode=OneWay}"/>
+
+    <TextBlock>Template binding, no converter:</TextBlock>
+    <ContentControl Content="{Binding Custom1}"/>
+
+    <TextBlock>Template binding, with converter:</TextBlock>
+    <ContentControl Content="{Binding Custom2}"/>
+    
+  </StackPanel>
   
 </Window>
